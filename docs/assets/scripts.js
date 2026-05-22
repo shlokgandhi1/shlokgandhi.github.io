@@ -4,13 +4,17 @@
   const loader  = document.getElementById('loader');
   const letters = document.querySelector('.loader-letters');
   const main    = document.getElementById('main');
-
-  // Detect if page was reloaded (not just navigated to)
+  // Detect navigation type and referrer to avoid showing the loader
+  // on internal link navigations (clicking between site pages).
   const navEntry = performance.getEntriesByType("navigation")[0];
-  const isReload = navEntry && navEntry.type === "reload";
-  
-  if (!isReload) {
-    // Not a reload, skip loader
+  const navType = navEntry && navEntry.type;
+  const isBackForward = navType === "back_forward";
+  const isReload = navType === "reload";
+  const isNavigate = navType === "navigate";
+  const isInternalReferrer = document.referrer && document.referrer.startsWith(location.origin);
+
+  if (isBackForward) {
+    // Back/forward restore: skip loader to avoid a flash.
     loader.remove();
     main.style.opacity = '1';
     main.style.pointerEvents = 'auto';
@@ -18,7 +22,17 @@
     return;
   }
 
-  // Show loader only on reload
+  // If this navigation was caused by clicking an internal link (same-origin referrer),
+  // don't show the loader — that prevents the loader appearing when switching pages.
+  if (isNavigate && isInternalReferrer) {
+    loader.remove();
+    main.style.opacity = '1';
+    main.style.pointerEvents = 'auto';
+    document.body.classList.add('loaded');
+    return;
+  }
+
+  // Show loader on initial visits and on reloads.
   const HOLD = 150 + 550 + 150;
 
   setTimeout(() => {

@@ -58,10 +58,6 @@ body{
   transition: background-color 0.45s ease, color 0.45s ease;
 }
 
-/* body.about-page {
-  overflow: hidden;
-} */
-
 /* canvas */
 #bgCanvas {
   position: fixed;
@@ -262,9 +258,6 @@ main {
 /* for light mode */
 .theme-toggle:hover {
   border-color: var(--canvas-glow-color);
-  /* color: var(--canvas-glow-color); */
-  /* border-color: var(--text); */
-  /* color: #000000; */
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
@@ -362,10 +355,6 @@ main {
 
 .theme-tooltip::after {
   content: '';
-  /* position: absolute; */
-  /* top: 100%; */
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
   border: 4px solid transparent;
   border-top-color: var(--text);
 }
@@ -520,10 +509,6 @@ body.loaded .dock {
   opacity: 0.9;
 }
 
-/* [data-theme="dark"] .dock-toggle::before {
-  opacity: 0.4;
-} */
-
 .dock-shelf {
   display: flex;
   flex-wrap: nowrap;
@@ -656,55 +641,26 @@ body.loaded .dock {
   transition-delay: 0.1s;
 }
 
-/* Dock icon brand backgrounds */
-/* .dock-icon--linkedin { background: #0A66C2; }
-.dock-icon--email    { background: linear-gradient(145deg, #EA4335 0%, #c5221f 100%); }
-[data-theme="light"] .dock-icon--github {
-  background: #ffffff;
-}
-
-[data-theme="light"] .dock-icon--github svg {
-  fill: #000000;
-}
-
-[data-theme="dark"] .dock-icon--github {
-  background: #000000;
-}
-
-[data-theme="dark"] .dock-icon--github svg {
-  fill: #ffffff;
-} */
-
 .dock-icon svg {
   width: 58%; height: 58%;
   display: block;
   pointer-events: none;
 }
 
-/* Tooltip label above each dock icon */
-/* .dock-label {
-  position: absolute;
-  bottom: calc(100% + 12px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(16, 16, 16, 0.9);
-  color: #eeeeee;
-  font-size: 0.68rem;
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: 8px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s ease;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-} */
+/* allow flex children to shrink properly */
+.dock-shelf { display:flex; gap:0.5rem; align-items:center; min-width:0; }
 
-/* .dock-item:hover .dock-label {
-  opacity: 1; 
-  transition-delay: 0.1s;
-}  */
+/* let each item shrink instead of forcing overflow */
+.dock-item { display:flex; align-items:center; min-width:0; flex:0 1 auto; }
+
+/* label: clamp font, truncate with ellipsis */
+.dock-label {
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:8ch; /* adjust as needed */
+  font-size:clamp(0.65rem, 1.2vw, 1rem);
+}
 
 /* projects section */
 .projects-section {
@@ -901,6 +857,78 @@ body.loaded .dock {
   .project-card {
     margin: 0 auto;
     max-width: 100%;
+  }
+
+  .dock {
+    bottom: 10px;
+    max-width: calc(100vw - 1rem);
+  }
+
+  .dock-toggle {
+    height: 26px;
+  }
+
+  .dock-toggle::before {
+    width: 28px;
+    height: 2px;
+  }
+
+  .dock-shelf {
+    gap: 8px;
+    padding: 8px 10px;
+    max-height: 160px;
+  }
+
+  .dock-shelf.hidden {
+    padding: 0 10px;
+  }
+
+  .dock-copyright {
+    display: 0.5rem;
+  }
+
+  .dock-item {
+    width: 30px;
+    height: 30px;
+  }
+
+  .dock-item a,
+  .dock-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .dock-icon svg {
+    width: 60%;
+    height: 60%;
+  }
+}
+
+/* Extra safety for very small screens: force icons-only dock */
+@media (max-width: 420px) {
+  .dock-shelf {
+    justify-content: center !important;
+    max-width: calc(100% - 20px) !important;
+    margin: 0 10px !important;
+    overflow: hidden !important;
+  }
+
+  .dock-copyright {
+    display: none !important;
+  }
+
+  .dock-item, .dock-item a, .dock-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .dock-toggle {
+    height: 24px !important;
+  }
+
+  .dock-toggle::before {
+    width: 26px !important;
+    height: 2px !important;
   }
 }
 
