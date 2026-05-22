@@ -641,27 +641,6 @@ body.loaded .dock {
   transition-delay: 0.1s;
 }
 
-.dock-icon svg {
-  width: 58%; height: 58%;
-  display: block;
-  pointer-events: none;
-}
-
-/* allow flex children to shrink properly */
-.dock-shelf { display:flex; gap:0.5rem; align-items:center; min-width:0; }
-
-/* let each item shrink instead of forcing overflow */
-.dock-item { display:flex; align-items:center; min-width:0; flex:0 1 auto; }
-
-/* label: clamp font, truncate with ellipsis */
-.dock-label {
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width:8ch; /* adjust as needed */
-  font-size:clamp(0.65rem, 1.2vw, 1rem);
-}
-
 /* projects section */
 .projects-section {
   padding: 4rem 2rem;
@@ -713,34 +692,11 @@ body.loaded .dock {
   overflow: hidden;
 }
 
-.project-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-.project-image2 img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-.project-image3 img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-.project-image4 img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
+.project-image img,
+.project-image1 img,
+.project-image2 img,
+.project-image3 img,
+.project-image4 img,
 .project-image5 img {
   width: 100%;
   height: 100%;
@@ -814,6 +770,11 @@ body.loaded .dock {
     font-size: 0.9rem;
   }
 
+  .theme-tooltip {
+    font-size: 10px;
+    /* padding: 0.4rem 0.6rem; */
+  }
+
   .info-card {
     padding: 2rem;
     margin: 2rem;
@@ -859,45 +820,56 @@ body.loaded .dock {
     max-width: 100%;
   }
 
-  .dock {
+   .dock {
     bottom: 10px;
-    max-width: calc(100vw - 1rem);
+    width: clamp(120px, calc(100vw - 16px), 350px);
   }
-
+ 
   .dock-toggle {
-    height: 26px;
+    height: 28px;
+    border-radius: 18px 18px 0 0;
   }
-
+ 
   .dock-toggle::before {
-    width: 28px;
+    width: 26px;
     height: 2px;
   }
-
+ 
   .dock-shelf {
+    flex-wrap: wrap;
     gap: 8px;
     padding: 8px 10px;
     max-height: 160px;
+    border-radius: 0 0 18px 18px;
   }
-
+ 
   .dock-shelf.hidden {
     padding: 0 10px;
+    border-radius: 0 0 18px 18px;
   }
-
+ 
   .dock-copyright {
-    display: 0.5rem;
+    display: block;
+    flex: 1 0 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    min-width: 0;
   }
-
+ 
   .dock-item {
     width: 30px;
     height: 30px;
   }
-
+ 
   .dock-item a,
   .dock-icon {
     width: 30px;
     height: 30px;
   }
-
+ 
   .dock-icon svg {
     width: 60%;
     height: 60%;
@@ -906,29 +878,43 @@ body.loaded .dock {
 
 /* Extra safety for very small screens: force icons-only dock */
 @media (max-width: 420px) {
-  .dock-shelf {
-    justify-content: center !important;
-    max-width: calc(100% - 20px) !important;
-    margin: 0 10px !important;
-    overflow: hidden !important;
+  .dock {
+    width: clamp(110px, calc(100vw - 16px), 300px);
+    bottom: 8px;
   }
-
-  .dock-copyright {
-    display: none !important;
-  }
-
-  .dock-item, .dock-item a, .dock-icon {
-    width: 28px !important;
-    height: 28px !important;
-  }
-
+ 
   .dock-toggle {
-    height: 24px !important;
+    height: 26px;
+    border-radius: 16px 16px 0 0;
   }
-
+ 
   .dock-toggle::before {
-    width: 26px !important;
-    height: 2px !important;
+    width: 24px;
+    height: 2px;
+  }
+ 
+  .dock-shelf {
+    max-height: 140px;
+    padding: 7px 8px;
+    border-radius: 0 0 16px 16px;
+    gap: 6px;
+  }
+ 
+  .dock-shelf.hidden {
+    padding: 0 8px;
+    border-radius: 0 0 16px 16px;
+  }
+ 
+  .dock-item,
+  .dock-item a,
+  .dock-icon {
+    width: 28px;
+    height: 28px;
+  }
+ 
+  .dock-icon svg {
+    width: 60%;
+    height: 60%;
   }
 }
 
