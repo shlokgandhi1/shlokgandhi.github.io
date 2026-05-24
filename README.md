@@ -6,7 +6,8 @@ Work In Progress
 ## Site structure
 - `docs/` — static site files served on GitHub Pages
 	- `index.html` — About / home page
-	- `projects.html` — Projects page
+	- `projects/`
+ 		- 	`index.html` — Projects page
 	- `assets/` — CSS, scripts, and images
 
 ## Deployment
